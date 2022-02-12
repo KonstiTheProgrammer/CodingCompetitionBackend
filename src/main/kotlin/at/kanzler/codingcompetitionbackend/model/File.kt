@@ -6,9 +6,10 @@ import javax.persistence.*
 @Table(name = "files")
 open class File {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FILE_ID", nullable = false)
-    open var id: Int? = null
+    @SequenceGenerator(name = "FILE_ID_GENERATOR", sequenceName = "FILE_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FILE_ID_GENERATOR")
+    open var id: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TASK_ID")

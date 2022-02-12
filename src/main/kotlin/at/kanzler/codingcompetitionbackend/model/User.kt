@@ -1,14 +1,16 @@
 package at.kanzler.codingcompetitionbackend.model
 
+import org.hibernate.annotations.Fetch
 import javax.persistence.*
 
 @Entity(name = "User")
-@Table(name = "user")
+@Table(name = "users")
 open class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID", nullable = false)
-    open var id: Int? = null
+    @SequenceGenerator(name = "USER_ID_GENERATOR", sequenceName = "USER_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ID_GENERATOR")
+    open var id: Long? = null
 
     @Column(name = "USERNAME", nullable = false, length = 20)
     open var username: String? = null
@@ -26,7 +28,7 @@ open class User {
     @Column(name = "PASSWORD", nullable = false)
     open var password: String? = null
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
 }

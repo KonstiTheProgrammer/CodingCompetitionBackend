@@ -1,13 +1,14 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: root
-    url: jdbc:mysql://localhost:3306/coding_competition
-    password: root
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/codingcompetition
+    password: postgres
   jpa:
     properties:
       hibernate:
         format_sql: 'true'
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
     show-sql: 'true'

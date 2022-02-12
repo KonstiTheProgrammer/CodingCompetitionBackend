@@ -8,7 +8,11 @@ import javax.persistence.*
 open class CodingCompetition {
     @Id
     @Column(name = "CODING_COMPETITION_ID", nullable = false)
-    open var id: Int? = null
+    @SequenceGenerator(name = "CODING_COMPETITION_ID_GENERATOR",
+        sequenceName = "CODING_COMPETITION_ID_SEQ",
+        allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CODING_COMPETITION_ID_SEQ")
+    open var id: Long? = null
 
     @Column(name = "START_DATE", nullable = false)
     open var startDate: Instant? = null
@@ -30,6 +34,7 @@ open class CodingCompetition {
     @JoinTable(name = "coding_competition_has_location",
         joinColumns = [JoinColumn(name = "CODING_COMPETITION_ID")],
         inverseJoinColumns = [JoinColumn(name = "LOCATION_ID")])
+
     open var locations: MutableSet<Location> = mutableSetOf()
 
     @OneToMany(mappedBy = "codingCompetition")

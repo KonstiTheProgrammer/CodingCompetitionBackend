@@ -6,9 +6,10 @@ import javax.persistence.*
 @Table(name = "submits")
 open class Submit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SUBMIT_ID", nullable = false)
-    open var id: Int? = null
+    @SequenceGenerator(name = "SUBMIT_ID_GENERATOR", sequenceName = "SUBMIT_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBMIT_ID_GENERATOR")
+    open var id: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TASK_ID")

@@ -10,10 +10,10 @@ import javax.persistence.Entity
 @Embeddable
 open class UserAttendsCodingCompetitionId : Serializable {
     @Column(name = "USER_ID", nullable = false)
-    open var userId: Int? = null
+    open var userId: Long? = null
 
     @Column(name = "CODING_COMPETITION_ID", nullable = false)
-    open var codingCompetitionId: Int? = null
+    open var codingCompetitionId: Long? = null
 
     override fun hashCode(): Int = Objects.hash(userId, codingCompetitionId)
     override fun equals(other: Any?): Boolean {
@@ -22,8 +22,7 @@ open class UserAttendsCodingCompetitionId : Serializable {
 
         other as UserAttendsCodingCompetitionId
 
-        return userId == other.userId &&
-                codingCompetitionId == other.codingCompetitionId
+        return userId == other.userId && codingCompetitionId == other.codingCompetitionId
     }
 
     companion object {

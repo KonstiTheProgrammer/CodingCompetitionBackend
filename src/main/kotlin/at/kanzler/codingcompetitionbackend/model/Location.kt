@@ -6,9 +6,10 @@ import javax.persistence.*
 @Table(name = "locations")
 open class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCATION_ID", nullable = false)
-    open var id: Int? = null
+    @SequenceGenerator(name = "LOCATION_ID_GENERATOR", sequenceName = "LOCATION_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOCATION_ID_SEQ")
+    open var id: Long? = null
 
     @Column(name = "LOCATION_NAME", nullable = false, length = 45)
     open var locationName: String? = null
