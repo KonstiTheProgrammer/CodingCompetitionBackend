@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/coding_competition
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'true'
