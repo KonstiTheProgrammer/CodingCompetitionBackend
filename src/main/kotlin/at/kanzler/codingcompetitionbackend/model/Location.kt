@@ -7,7 +7,7 @@ import javax.persistence.*
 open class Location {
     @Id
     @Column(name = "LOCATION_ID", nullable = false)
-    @SequenceGenerator(name = "LOCATION_ID_GENERATOR", sequenceName = "LOCATION_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "LOCATION_ID_SEQ", sequenceName = "LOCATION_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOCATION_ID_SEQ")
     open var id: Long? = null
 
@@ -51,6 +51,7 @@ open class Location {
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = id?.hashCode() ?: 0
         result = 31 * result + (locationName?.hashCode() ?: 0)
@@ -63,6 +64,7 @@ open class Location {
         result = 31 * result + userAttendsCodingCompetitions.hashCode()
         return result
     }
+
     override fun toString(): String {
         return "Location(id=$id, locationName=$locationName, street=$street, postalCode=$postalCode, phoneNr=$phoneNr, city=$city, houseNumber=$houseNumber, codingCompetitions=$codingCompetitions, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
     }

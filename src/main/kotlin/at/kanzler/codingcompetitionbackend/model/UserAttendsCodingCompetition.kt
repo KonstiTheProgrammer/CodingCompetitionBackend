@@ -10,7 +10,7 @@ open class UserAttendsCodingCompetition {
 
     @MapsId("codingCompetitionId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CODING_COMPETITION_ID")
+    @JoinColumn(name = "CODING_COMPETITION_ID", foreignKey = ForeignKey(name = "FK_USER_ATTENDS_CODING_COMPETITION"))
     open var codingCompetition: CodingCompetition? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,7 +19,9 @@ open class UserAttendsCodingCompetition {
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID",
+        nullable = false,
+        foreignKey = ForeignKey(name = "FK_USER_ATTENDS_CODING_COMPETITION_USER"))
     open var user: User? = null
 
     @OneToMany(mappedBy = "userAttendsCodingCompetition")
@@ -37,6 +39,7 @@ open class UserAttendsCodingCompetition {
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = id?.hashCode() ?: 0
         result = 31 * result + (codingCompetition?.hashCode() ?: 0)
@@ -45,6 +48,7 @@ open class UserAttendsCodingCompetition {
         result = 31 * result + submits.hashCode()
         return result
     }
+
     override fun toString(): String {
         return "UserAttendsCodingCompetition(id=$id, codingCompetition=$codingCompetition, location=$location, user=$user, submits=$submits)"
     }

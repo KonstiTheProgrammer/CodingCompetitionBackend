@@ -1,5 +1,6 @@
 package at.kanzler.codingcompetitionbackend.model
 
+import lombok.NoArgsConstructor
 import java.time.Instant
 import javax.persistence.*
 
@@ -7,8 +8,8 @@ import javax.persistence.*
 @Table(name = "coding_competition")
 open class CodingCompetition {
     @Id
-    @Column(name = "CODING_COMPETITION_ID", nullable = false)
-    @SequenceGenerator(name = "CODING_COMPETITION_ID_GENERATOR",
+    @Column(name = "CODING_COMPETITION_ID")
+    @SequenceGenerator(name = "CODING_COMPETITION_ID_SEQ",
         sequenceName = "CODING_COMPETITION_ID_SEQ",
         allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CODING_COMPETITION_ID_SEQ")
@@ -18,7 +19,7 @@ open class CodingCompetition {
     open var startDate: Instant? = null
 
     @Column(name = "END_DATE", nullable = false, length = 45)
-    open var endDate: String? = null
+    open var endDate: Instant? = null
 
     @Column(name = "TITLE", nullable = false, length = 100)
     open var title: String? = null
@@ -34,6 +35,9 @@ open class CodingCompetition {
     @JoinTable(name = "coding_competition_has_location",
         joinColumns = [JoinColumn(name = "CODING_COMPETITION_ID")],
         inverseJoinColumns = [JoinColumn(name = "LOCATION_ID")])
+    @JoinColumn(name = "CODING_COMPETITION_ID",
+        referencedColumnName = "CODING_COMPETITION_ID",
+        foreignKey = ForeignKey(name = "CODING_COMPETITION_HAS_LOCATION_FK"))
     open var locations: MutableSet<Location> = mutableSetOf()
 
     @OneToMany(mappedBy = "codingCompetition")
@@ -56,6 +60,7 @@ open class CodingCompetition {
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = id?.hashCode() ?: 0
         result = 31 * result + (startDate?.hashCode() ?: 0)
@@ -67,7 +72,11 @@ open class CodingCompetition {
         result = 31 * result + userAttendsCodingCompetitions.hashCode()
         return result
     }
+
     override fun toString(): String {
         return "CodingCompetition(id=$id, startDate=$startDate, endDate=$endDate, title=$title, description=$description, tasks=$tasks, locations=$locations, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
     }
+
+
+
 }

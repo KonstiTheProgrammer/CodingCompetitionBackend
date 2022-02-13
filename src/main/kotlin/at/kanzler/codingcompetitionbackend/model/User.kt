@@ -8,9 +8,9 @@ import javax.persistence.*
     uniqueConstraints = [UniqueConstraint(name = "UniqueUsernameAndEmail", columnNames = ["username", "email"])])
 open class User {
     @Id
-    @Column(name = "USER_ID", nullable = false)
-    @SequenceGenerator(name = "USER_ID_GENERATOR", sequenceName = "USER_ID_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ID_GENERATOR")
+    @Column(name = "USER_ID")
+    @SequenceGenerator(name = "USER_ID_SEQ", sequenceName = "USER_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ID_SEQ")
     open var id: Long? = null
 
     @Column(name = "USERNAME", nullable = false, length = 20)
