@@ -31,7 +31,6 @@ open class UserAttendsCodingCompetition {
         if (this === other) return true
         if (other !is UserAttendsCodingCompetition) return false
 
-        if (id != other.id) return false
         if (codingCompetition != other.codingCompetition) return false
         if (location != other.location) return false
         if (user != other.user) return false

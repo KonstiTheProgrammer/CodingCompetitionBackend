@@ -37,7 +37,6 @@ open class User {
         if (this === other) return true
         if (other !is User) return false
 
-        if (id != other.id) return false
         if (username != other.username) return false
         if (firstName != other.firstName) return false
         if (lastName != other.lastName) return false

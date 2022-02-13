@@ -49,7 +49,6 @@ open class CodingCompetition {
 
         other as CodingCompetition
 
-        if (id != other.id) return false
         if (startDate != other.startDate) return false
         if (endDate != other.endDate) return false
         if (title != other.title) return false

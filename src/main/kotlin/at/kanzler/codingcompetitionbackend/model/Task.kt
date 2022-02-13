@@ -36,7 +36,6 @@ open class Task {
         if (this === other) return true
         if (other !is Task) return false
 
-        if (id != other.id) return false
         if (competition != other.competition) return false
         if (title != other.title) return false
         if (level != other.level) return false

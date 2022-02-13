@@ -24,7 +24,6 @@ open class File {
         if (this === other) return true
         if (other !is File) return false
 
-        if (id != other.id) return false
         if (task != other.task) return false
         if (fileUrl != other.fileUrl) return false
 

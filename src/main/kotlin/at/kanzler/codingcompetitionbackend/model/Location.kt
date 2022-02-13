@@ -39,7 +39,6 @@ open class Location {
         if (this === other) return true
         if (other !is Location) return false
 
-        if (id != other.id) return false
         if (locationName != other.locationName) return false
         if (street != other.street) return false
         if (postalCode != other.postalCode) return false

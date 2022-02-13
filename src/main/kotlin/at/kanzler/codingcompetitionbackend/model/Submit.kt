@@ -33,7 +33,6 @@ open class Submit {
         if (this === other) return true
         if (other !is Submit) return false
 
-        if (id != other.id) return false
         if (task != other.task) return false
         if (userAttendsCodingCompetition != other.userAttendsCodingCompetition) return false
         if (contentJson != other.contentJson) return false
