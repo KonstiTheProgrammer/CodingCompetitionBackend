@@ -31,7 +31,7 @@ open class CodingCompetition {
     @OneToMany(mappedBy = "competition")
     open var tasks: MutableSet<Task> = mutableSetOf()
 
-    @ManyToMany
+    @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinTable(name = "coding_competition_has_location",
         joinColumns = [JoinColumn(name = "CODING_COMPETITION_ID")],
         inverseJoinColumns = [JoinColumn(name = "LOCATION_ID")])
@@ -40,7 +40,7 @@ open class CodingCompetition {
         foreignKey = ForeignKey(name = "CODING_COMPETITION_HAS_LOCATION_FK"))
     open var locations: MutableSet<Location> = mutableSetOf()
 
-    @OneToMany(mappedBy = "codingCompetition")
+    @OneToMany(mappedBy = "codingCompetition", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {

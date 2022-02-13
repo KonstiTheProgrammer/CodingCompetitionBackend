@@ -11,7 +11,7 @@ open class Task {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TASK_ID_SEQ")
     open var id: Long? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "COMPETITION_ID", foreignKey = ForeignKey(name = "TASK_COMPETITION_ID_FK"))
     open var competition: CodingCompetition? = null
 
@@ -25,10 +25,10 @@ open class Task {
     @Column(name = "DESCRIPTION", nullable = false, columnDefinition = "TEXT")
     open var description: String? = null
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var files: MutableSet<File> = mutableSetOf()
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var submits: MutableSet<Submit> = mutableSetOf()
 
 

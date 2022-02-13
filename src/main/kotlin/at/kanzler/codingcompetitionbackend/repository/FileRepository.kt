@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface FileRepository : JpaRepository<File, Long> {
+    fun findByFileUrl(fileUrl: String): File?
 }

@@ -29,10 +29,10 @@ open class Location {
     @Column(name = "HOUSE_NUMBER", nullable = false, length = 8)
     open var houseNumber: String? = null
 
-    @ManyToMany(mappedBy = "locations", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "locations", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var codingCompetitions: MutableSet<CodingCompetition> = mutableSetOf()
 
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {

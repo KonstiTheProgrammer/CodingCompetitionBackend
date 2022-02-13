@@ -11,15 +11,14 @@ open class Submit {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBMIT_ID_SEQ")
     open var id: Long? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TASK_ID",
-        foreignKey = ForeignKey(name = "SUBMIT_TASK_ID_FK"))
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "TASK_ID", foreignKey = ForeignKey(name = "SUBMIT_TASK_ID_FK"))
     open var task: Task? = null
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumns(JoinColumn(name = "USER_ID"),
         JoinColumn(name = "CODING_COMPETITION_ID"),
         foreignKey = ForeignKey(name = "SUBMIT_USER_FK"))
-    @ManyToOne(fetch = FetchType.LAZY)
     open var userAttendsCodingCompetition: UserAttendsCodingCompetition? = null
 
     @Lob

@@ -11,7 +11,7 @@ open class File {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FILE_ID_SEQ")
     open var id: Long? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "TASK_ID", foreignKey = ForeignKey(name = "FILE_TASK_ID_FK"))
     open var task: Task? = null
 

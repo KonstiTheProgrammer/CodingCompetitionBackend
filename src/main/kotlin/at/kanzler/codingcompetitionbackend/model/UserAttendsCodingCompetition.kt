@@ -9,22 +9,22 @@ open class UserAttendsCodingCompetition {
     open var id: UserAttendsCodingCompetitionId? = null
 
     @MapsId("codingCompetitionId")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
     @JoinColumn(name = "CODING_COMPETITION_ID", foreignKey = ForeignKey(name = "FK_USER_ATTENDS_CODING_COMPETITION"))
     open var codingCompetition: CodingCompetition? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LOCATION_ID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "LOCATION_ID", foreignKey = ForeignKey(name = "FK_USER_ATTENDS_LOCATION"))
     open var location: Location? = null
 
     @MapsId("userId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
     @JoinColumn(name = "USER_ID",
         nullable = false,
         foreignKey = ForeignKey(name = "FK_USER_ATTENDS_CODING_COMPETITION_USER"))
     open var user: User? = null
 
-    @OneToMany(mappedBy = "userAttendsCodingCompetition")
+    @OneToMany(mappedBy = "userAttendsCodingCompetition", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var submits: MutableSet<Submit> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {

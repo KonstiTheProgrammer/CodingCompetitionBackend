@@ -2,6 +2,7 @@ package at.kanzler.codingcompetitionbackend
 
 import at.kanzler.codingcompetitionbackend.model.CodingCompetition
 import at.kanzler.codingcompetitionbackend.repository.CodingCompetitionRepository
+import org.hibernate.proxy.HibernateProxy
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -25,7 +26,7 @@ class CodingCompetitionRepositoryTest(@Autowired val codingCompetitionRepository
     }
 
     @Test
-    fun `should add a new CodingCompetition to the table`() {
+    internal fun `should add a new CodingCompetition to the table`() {
         //given
         val codingCompetition = CodingCompetition();
         codingCompetition.description = "description";
@@ -36,18 +37,20 @@ class CodingCompetitionRepositoryTest(@Autowired val codingCompetitionRepository
         codingCompetitionRepository.save(codingCompetition);
 
         //then
-        val comp = codingCompetitionRepository.findById(1)
+        val comp = codingCompetitionRepository.findById(1);
         Assertions.assertTrue(comp.isPresent)
     }
 
     @Test
-    fun `should find the entity per title`() {
+    internal fun `should find the entity per title`() {
         //given
-        val codingCompetition = CodingCompetition();
-        codingCompetition.description = "description";
-        codingCompetition.title = "title";
-        codingCompetition.startDate = LocalDate.of(2020, 1, 1);
-        codingCompetition.endDate = LocalDate.of(2021, 1, 1);
+        val codingCompetition = CodingCompetition().apply {
+            description = "description2";
+            title = "title2";
+            startDate = LocalDate.of(2020, 1, 1);
+            endDate = LocalDate.of(2021, 1, 1);
+        };
+
         //when
         codingCompetitionRepository.save(codingCompetition);
     }

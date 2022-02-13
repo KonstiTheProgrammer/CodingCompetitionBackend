@@ -29,7 +29,7 @@ open class User {
     @Column(name = "PASSWORD", nullable = false, columnDefinition = "TEXT")
     open var password: String? = null
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
 
