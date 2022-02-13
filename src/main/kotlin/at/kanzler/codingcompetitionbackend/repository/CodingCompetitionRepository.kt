@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CodingCompetitionRepository : JpaRepository<CodingCompetition, Long> {
-    fun findBy(name: String): CodingCompetition?
 }

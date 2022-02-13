@@ -6,9 +6,11 @@ spring:
     password: postgres
   jpa:
     properties:
+      jdbc:
+        timezone: UTC
       hibernate:
         format_sql: 'true'
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: 'true'

@@ -1,7 +1,7 @@
 package at.kanzler.codingcompetitionbackend.model
 
-import lombok.NoArgsConstructor
-import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity(name = "CodingCompetition")
@@ -16,10 +16,10 @@ open class CodingCompetition {
     open var id: Long? = null
 
     @Column(name = "START_DATE", nullable = false)
-    open var startDate: Instant? = null
+    open var startDate: LocalDate? = null
 
     @Column(name = "END_DATE", nullable = false, length = 45)
-    open var endDate: Instant? = null
+    open var endDate: LocalDate? = null
 
     @Column(name = "TITLE", nullable = false, length = 100)
     open var title: String? = null
@@ -76,7 +76,4 @@ open class CodingCompetition {
     override fun toString(): String {
         return "CodingCompetition(id=$id, startDate=$startDate, endDate=$endDate, title=$title, description=$description, tasks=$tasks, locations=$locations, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
     }
-
-
-
 }

@@ -2,25 +2,53 @@ package at.kanzler.codingcompetitionbackend
 
 import at.kanzler.codingcompetitionbackend.model.CodingCompetition
 import at.kanzler.codingcompetitionbackend.repository.CodingCompetitionRepository
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.platform.commons.logging.LoggerFactory
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.LocalDate
 
 
-@RunWith(SpringRunner::class)
 @DataJpaTest
-class CodingCompetitionRepositoryTest(@Autowired codingCompetitionRepository: CodingCompetitionRepository) {
+@RunWith(SpringRunner::class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DisplayName("CodingCompetitionRepositoryTest")
+class CodingCompetitionRepositoryTest(@Autowired val codingCompetitionRepository: CodingCompetitionRepository) {
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(CodingCompetitionRepositoryTest::class.java)
+    }
 
     @Test
     fun `should add a new CodingCompetition to the table`() {
         //given
-        var codingCompetition = CodingCompetition();
-
+        val codingCompetition = CodingCompetition();
+        codingCompetition.description = "description";
+        codingCompetition.title = "title";
+        codingCompetition.startDate = LocalDate.of(2020, 1, 1);
+        codingCompetition.endDate = LocalDate.of(2021, 1, 1);
         //when
+        codingCompetitionRepository.save(codingCompetition);
 
         //then
+        val comp = codingCompetitionRepository.findById(1)
+        Assertions.assertTrue(comp.isPresent)
+    }
+
+    @Test
+    fun `should find the entity per title`() {
+        //given
+        val codingCompetition = CodingCompetition();
+        codingCompetition.description = "description";
+        codingCompetition.title = "title";
+        codingCompetition.startDate = LocalDate.of(2020, 1, 1);
+        codingCompetition.endDate = LocalDate.of(2021, 1, 1);
+        //when
+        codingCompetitionRepository.save(codingCompetition);
     }
 }
