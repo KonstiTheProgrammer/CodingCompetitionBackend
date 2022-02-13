@@ -5,4 +5,5 @@ import at.kanzler.codingcompetitionbackend.entity.User
 
 interface UserService {
     fun registerUser(userDto: UserDto): User;
+    fun createVerificationToken(user: User, token: String)
 }

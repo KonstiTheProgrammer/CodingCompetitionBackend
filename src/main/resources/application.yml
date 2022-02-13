@@ -14,3 +14,12 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: 'true'
+  mail:
+    host: 'smtp.mailtrap.io'
+    port: '25',
+    username: '3c5c625c2ad413'
+    password: '291ce18bd56deb'
+    protocol: 'smtp'
+  thymeleaf:
+    prefix: 'classpath:/templates/'
+    suffix: '.html'
