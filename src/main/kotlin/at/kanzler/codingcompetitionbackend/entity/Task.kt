@@ -1,4 +1,4 @@
-package at.kanzler.codingcompetitionbackend.model
+package at.kanzler.codingcompetitionbackend.entity
 
 import javax.persistence.*
 

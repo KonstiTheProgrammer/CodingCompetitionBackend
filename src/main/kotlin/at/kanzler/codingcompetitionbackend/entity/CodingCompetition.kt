@@ -1,7 +1,6 @@
-package at.kanzler.codingcompetitionbackend.model
+package at.kanzler.codingcompetitionbackend.entity
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity(name = "CodingCompetition")

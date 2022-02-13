@@ -1,11 +1,10 @@
-package at.kanzler.codingcompetitionbackend.model
+package at.kanzler.codingcompetitionbackend.entity
 
 import org.hibernate.Hibernate
 import java.io.Serializable
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Embeddable
-import javax.persistence.Entity
 
 @Embeddable
 open class UserAttendsCodingCompetitionId : Serializable {

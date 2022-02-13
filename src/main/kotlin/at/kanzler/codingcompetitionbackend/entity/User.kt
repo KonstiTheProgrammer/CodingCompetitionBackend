@@ -1,6 +1,5 @@
-package at.kanzler.codingcompetitionbackend.model
+package at.kanzler.codingcompetitionbackend.entity
 
-import org.hibernate.annotations.Fetch
 import javax.persistence.*
 
 @Entity(name = "User")
@@ -25,8 +24,13 @@ open class User {
     @Column(name = "EMAIL", nullable = false, length = 45)
     open var email: String? = null
 
-    @Lob
-    @Column(name = "PASSWORD", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "ROLE", nullable = false, length = 20)
+    open var role: String? = null
+
+    @Column(name = "ENABLED", nullable = false)
+    open var enabled: Boolean? = false
+
+    @Column(name = "PASSWORD", nullable = false, length = 60)
     open var password: String? = null
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
@@ -46,6 +50,7 @@ open class User {
 
         return true
     }
+
     override fun hashCode(): Int {
         var result = id?.hashCode() ?: 0
         result = 31 * result + (username?.hashCode() ?: 0)
@@ -56,6 +61,7 @@ open class User {
         result = 31 * result + userAttendsCodingCompetitions.hashCode()
         return result
     }
+
     override fun toString(): String {
         return "User(id=$id, username=$username, firstName=$firstName, lastName=$lastName, email=$email, password=$password, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
     }
