@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PasswordResetTokenRepository : JpaRepository<PasswordResetToken, Long> {
+    fun findByToken(token: String): PasswordResetToken?
 }

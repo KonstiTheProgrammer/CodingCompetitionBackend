@@ -1,6 +1,8 @@
 package at.kanzler.codingcompetitionbackend.service
 
-import at.kanzler.codingcompetitionbackend.dto.ResetPasswordDTO
+import at.kanzler.codingcompetitionbackend.dto.ChangePasswordDto
+import at.kanzler.codingcompetitionbackend.dto.ForgotPasswordDto
+import at.kanzler.codingcompetitionbackend.dto.ResetPasswordDto
 import at.kanzler.codingcompetitionbackend.dto.UserDto
 import at.kanzler.codingcompetitionbackend.entity.PasswordResetToken
 import at.kanzler.codingcompetitionbackend.entity.User
@@ -42,7 +44,6 @@ class UserServiceImpl(
     override fun registerUser(userDto: UserDto) {
         //set default values
         val user = userConverter.convertToUser(userDto);
-        user.role = "USER"
         user.password = passwordEncoder.encode(user.password)
 
         if (userRepository.findByUsername(user.username!!) != null) {
@@ -91,16 +92,39 @@ class UserServiceImpl(
             "${getApplicationUrl()}/api/v1/auth/verifyRegistration?token=${token.token}"))
 
 
-    override fun forgotPassword(passwordDto: ResetPasswordDTO) {
+    override fun forgotPassword(passwordDto: ForgotPasswordDto) {
         val user = userRepository.findByEmail(passwordDto.email)
             ?: throw NoSuchElementException("No user found for email ${passwordDto.email}");
 
-
+        val passwordResetToken = PasswordResetToken(user, UUID.randomUUID().toString())
+        passwordResetTokenRepository.save(passwordResetToken)
+        publisher.publishEvent(SendTokenEmailEvent(user,
+            "${getApplicationUrl()}/api/v1/auth/savePassword?token=${passwordResetToken.token}"))
     }
 
-    fun createPasswordResetTokenForUser(user: User, token: String) {
-        val passwordResetToken = PasswordResetToken(user, token);
-        passwordResetTokenRepository.save(passwordResetToken);
+    override fun savePassword(token: String, resetPassword: ResetPasswordDto) {
+        val passwordToken = passwordResetTokenRepository.findByToken(token)
+            ?: throw NoSuchElementException("No token found for $token");
+
+        if ((passwordToken.expirationTime!!).isBefore(java.time.LocalDateTime.now())) {
+            throw IllegalArgumentException("Token expired");
+        }
+
+        val user = passwordToken.user ?: throw NoSuchElementException("No user found for $token");
+        user.password = passwordEncoder.encode(resetPassword.password)
+        userRepository.save(user);
+    }
+
+    override fun changePassword(passwordDto: ChangePasswordDto) {
+        val user = userRepository.findByUsername(passwordDto.username)
+            ?: throw NoSuchElementException("No user found for username ${passwordDto.username}");
+
+        if (!passwordEncoder.matches(passwordDto.oldPassword, user.password)) {
+            throw IllegalArgumentException("Old password is incorrect");
+        }
+
+        user.password = passwordEncoder.encode(passwordDto.newPassword)
+        userRepository.save(user);
     }
 
     fun getApplicationUrl(): String = "http://${InetAddress.getLoopbackAddress().getHostName()}:${

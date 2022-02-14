@@ -1,6 +1,8 @@
 package at.kanzler.codingcompetitionbackend.controller
 
-import at.kanzler.codingcompetitionbackend.dto.ResetPasswordDTO
+import at.kanzler.codingcompetitionbackend.dto.ChangePasswordDto
+import at.kanzler.codingcompetitionbackend.dto.ForgotPasswordDto
+import at.kanzler.codingcompetitionbackend.dto.ResetPasswordDto
 import at.kanzler.codingcompetitionbackend.dto.UserDto
 import at.kanzler.codingcompetitionbackend.service.UserService
 import org.slf4j.Logger
@@ -15,10 +17,6 @@ import org.springframework.web.bind.annotation.*
 class RegistrationController(
     @Autowired private val userService: UserService,
 ) {
-    companion object {
-        val LOGGER: Logger = LoggerFactory.getLogger(RegistrationController::class.java);
-    }
-
     @ExceptionHandler(NoSuchElementException::class)
     fun handleNotFound(ex: NoSuchElementException): ResponseEntity<String> {
         return ResponseEntity(ex.message, HttpStatus.NOT_FOUND);
@@ -52,5 +50,22 @@ class RegistrationController(
 
     @PostMapping("/forgotPassword")
     @ResponseStatus(HttpStatus.OK)
-    fun forgotPassword(@RequestBody passwordDto: ResetPasswordDTO) = userService.forgotPassword(passwordDto);
+    fun forgotPassword(@RequestBody passwordDto: ForgotPasswordDto): String {
+        userService.forgotPassword(passwordDto);
+        return "Password reset email sent";
+    }
+
+    @PostMapping("/savePassword")
+    @ResponseStatus(HttpStatus.OK)
+    fun savePassword(@RequestParam("token") token: String, @RequestBody passwordDto: ResetPasswordDto): String {
+        userService.savePassword(token, passwordDto);
+        return "Password saved";
+    }
+
+    @PostMapping("/changePassword")
+    @ResponseStatus(HttpStatus.OK)
+    fun changePassword(@RequestBody passwordDto: ChangePasswordDto): String {
+        userService.changePassword(passwordDto);
+        return "Password changed";
+    }
 }

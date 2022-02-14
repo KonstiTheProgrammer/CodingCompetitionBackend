@@ -1,10 +1,10 @@
 package at.kanzler.codingcompetitionbackend.entity
 
+import at.kanzler.codingcompetitionbackend.enum.Role
 import javax.persistence.*
 
 @Entity(name = "User")
-@Table(name = "users",
-    uniqueConstraints = [UniqueConstraint(name = "unique_username", columnNames = ["username"])])
+@Table(name = "users", uniqueConstraints = [UniqueConstraint(name = "unique_username", columnNames = ["username"])])
 open class User {
     @Id
     @Column(name = "USER_ID")
@@ -24,8 +24,8 @@ open class User {
     @Column(name = "EMAIL", nullable = false, length = 45)
     open var email: String? = null
 
-    @Column(name = "ROLE", nullable = false, length = 20)
-    open var role: String? = null
+    @Column(name = "ROLE", nullable = false, columnDefinition = "smallint")
+    open var role: Role = Role.USER
 
     @Column(name = "ENABLED", nullable = false)
     open var enabled: Boolean? = false
