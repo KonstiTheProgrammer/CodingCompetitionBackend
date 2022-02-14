@@ -4,28 +4,28 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "verification_token")
-open class VerificationToken {
+@Table(name = "password_reset_token")
+open class PasswordResetToken {
     companion object {
-        const val EXPIRATION_TIME: Long = 3
+        const val EXPIRATION_TIME: Long = 1
 
         fun generateExpirationTime(): LocalDateTime {
-            return LocalDateTime.now().plusDays(EXPIRATION_TIME)
+            return LocalDateTime.now().plusHours(EXPIRATION_TIME)
         }
     }
 
     @Id
-    @SequenceGenerator(name = "verification_token_seq", sequenceName = "verification_token_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "verification_token_seq")
+    @SequenceGenerator(name = "password_reset_token_id_seq",
+        sequenceName = "password_reset_token_id_seq",
+        allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "password_reset_token_id_seq")
     open var id: Long? = null
 
     @Column(name = "TOKEN", nullable = false)
     open var token: String? = null
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID",
-        nullable = false,
-        foreignKey = ForeignKey(name = "fk_verification_token_user_user_id"))
+    @JoinColumn(name = "USER_ID", nullable = false, foreignKey = ForeignKey(name = "fk_password_reset_token_user_id"))
     open var user: User? = null;
 
     @Column(name = "EXPIRATION_DATE", nullable = false)
