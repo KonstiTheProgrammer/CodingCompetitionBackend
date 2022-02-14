@@ -1,6 +1,6 @@
 package at.kanzler.codingcompetitionbackend.entity
 
-import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -25,16 +25,16 @@ open class VerificationToken {
     open var user: User? = null;
 
     @Column(name = "EXPIRATION_DATE", nullable = false)
-    open var expirationTime: LocalDate? = null;
+    open var expirationTime: LocalDateTime? = null;
 
     constructor(user: User, token: String) {
         this.user = user
         this.token = token
-        this.expirationTime = LocalDate.now().plusDays(EXPIRATION_TIME)
+        this.expirationTime = LocalDateTime.now().plusDays(EXPIRATION_TIME)
     }
 
     constructor(token: String) {
         this.token = token
-        this.expirationTime = LocalDate.now().plusDays(EXPIRATION_TIME)
+        this.expirationTime = LocalDateTime.now().plusDays(EXPIRATION_TIME)
     }
 }

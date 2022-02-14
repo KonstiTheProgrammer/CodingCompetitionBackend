@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 @DataJpaTest
@@ -32,8 +32,8 @@ class CodingCompetitionRepositoryTest(@Autowired val codingCompetitionRepository
         val codingCompetition = CodingCompetition();
         codingCompetition.description = "description";
         codingCompetition.title = "title";
-        codingCompetition.startDate = LocalDate.of(2020, 1, 1);
-        codingCompetition.endDate = LocalDate.of(2021, 1, 1);
+        codingCompetition.startDate = LocalDateTime.of(2020, 1, 1);
+        codingCompetition.endDate = LocalDateTime.of(2021, 1, 1);
         //when
         codingCompetitionRepository.save(codingCompetition);
 
@@ -48,8 +48,8 @@ class CodingCompetitionRepositoryTest(@Autowired val codingCompetitionRepository
         val codingCompetition = CodingCompetition().apply {
             description = "description2";
             title = "title2";
-            startDate = LocalDate.of(2020, 1, 1);
-            endDate = LocalDate.of(2021, 1, 1);
+            startDate = LocalDateTime.of(2020, 1, 1);
+            endDate = LocalDateTime.of(2021, 1, 1);
         };
         //when
         codingCompetitionRepository.save(codingCompetition);

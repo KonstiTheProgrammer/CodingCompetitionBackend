@@ -36,6 +36,8 @@ open class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    open var verificationToken: VerificationToken? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -47,6 +49,7 @@ open class User {
         if (email != other.email) return false
         if (password != other.password) return false
         if (userAttendsCodingCompetitions != other.userAttendsCodingCompetitions) return false
+        if (verificationToken != other.verificationToken) return false
 
         return true
     }
@@ -59,10 +62,11 @@ open class User {
         result = 31 * result + (email?.hashCode() ?: 0)
         result = 31 * result + (password?.hashCode() ?: 0)
         result = 31 * result + userAttendsCodingCompetitions.hashCode()
+        result = 31 * result + verificationToken.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "User(id=$id, username=$username, firstName=$firstName, lastName=$lastName, email=$email, password=$password, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
+        return "User(id=$id, username=$username, firstName=$firstName, lastName=$lastName, email=$email, password=$password, userAttendsCodingCompetitions=$userAttendsCodingCompetitions), verificationToken=$verificationToken)"
     }
 }

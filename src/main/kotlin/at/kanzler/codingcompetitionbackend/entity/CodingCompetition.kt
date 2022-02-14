@@ -1,6 +1,6 @@
 package at.kanzler.codingcompetitionbackend.entity
 
-import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity(name = "CodingCompetition")
@@ -15,10 +15,10 @@ open class CodingCompetition {
     open var id: Long? = null
 
     @Column(name = "START_DATE", nullable = false)
-    open var startDate: LocalDate? = null
+    open var startDate: LocalDateTime? = null
 
     @Column(name = "END_DATE", nullable = false, length = 45)
-    open var endDate: LocalDate? = null
+    open var endDate: LocalDateTime? = null
 
     @Column(name = "TITLE", nullable = false, length = 100)
     open var title: String? = null
