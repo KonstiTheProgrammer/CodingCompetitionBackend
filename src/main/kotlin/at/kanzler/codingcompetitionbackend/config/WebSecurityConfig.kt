@@ -24,7 +24,7 @@ class WebSecurityConfig {
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .antMatchers("/api/v1/auth/**").permitAll()
+            .antMatchers("**").permitAll()
 
         return httpSecurity.build()
     }

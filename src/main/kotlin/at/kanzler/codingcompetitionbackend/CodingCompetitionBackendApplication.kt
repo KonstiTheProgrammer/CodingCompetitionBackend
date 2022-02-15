@@ -14,11 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @EnableAsync
 @SpringBootApplication
 class CodingCompetitionBackendApplication
-@Bean
-fun commandLineRunner(): CommandLineRunner? {
-    return CommandLineRunner { args: Array<String?>? -> println("Hello World") }
-}
-
 
 fun main(args: Array<String>) {
     runApplication<CodingCompetitionBackendApplication>(*args)

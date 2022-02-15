@@ -42,6 +42,16 @@ open class CodingCompetition {
     @OneToMany(mappedBy = "codingCompetition", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     open var userAttendsCodingCompetitions: MutableSet<UserAttendsCodingCompetition> = mutableSetOf()
 
+    constructor(id: Long?, startDate: LocalDateTime?, endDate: LocalDateTime?, title: String?, description: String?) {
+        this.id = id
+        this.startDate = startDate
+        this.endDate = endDate
+        this.title = title
+        this.description = description
+    }
+
+    constructor()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -70,6 +80,8 @@ open class CodingCompetition {
         result = 31 * result + userAttendsCodingCompetitions.hashCode()
         return result
     }
+
+
 
     override fun toString(): String {
         return "CodingCompetition(id=$id, startDate=$startDate, endDate=$endDate, title=$title, description=$description, tasks=$tasks, locations=$locations, userAttendsCodingCompetitions=$userAttendsCodingCompetitions)"
