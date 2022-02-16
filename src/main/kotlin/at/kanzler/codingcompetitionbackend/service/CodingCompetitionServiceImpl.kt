@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class CodingCompetitionServiceImpl(@Autowired private val codingCompetitionRepository: CodingCompetitionRepository) : CodingCompetitionService {
+class CodingCompetitionServiceImpl(@Autowired private val codingCompetitionRepository: CodingCompetitionRepository) :
+    CodingCompetitionService {
 
     private val ccConverter = Mappers.getMapper(CodingContestConverter::class.java)
 
@@ -25,8 +26,9 @@ class CodingCompetitionServiceImpl(@Autowired private val codingCompetitionRepos
         return codingCompetitionRepository.save(ccConverter.convertToCodingCompetition(codingCompetitionDto))
     }
 
-    override fun updateCodingCompetition(id : Long, codingCompetitionDto: CodingCompetitionDto): CodingCompetition {
-        val codingCompetitionToUpdate = codingCompetitionRepository.findById(id).orElse(null) ?: throw IllegalArgumentException("CodingCompetition with id $id not found")
+    override fun updateCodingCompetition(id: Long, codingCompetitionDto: CodingCompetitionDto): CodingCompetition {
+        val codingCompetitionToUpdate = codingCompetitionRepository.findById(id).orElse(null)
+            ?: throw IllegalArgumentException("CodingCompetition with id $id not found")
 
         codingCompetitionToUpdate.title = codingCompetitionDto.title
         codingCompetitionToUpdate.description = codingCompetitionDto.description
@@ -37,6 +39,7 @@ class CodingCompetitionServiceImpl(@Autowired private val codingCompetitionRepos
     }
 
     override fun deleteCodingCompetition(id: Long) {
+        (codingCompetitionRepository.findById(id)).orElseThrow { IllegalArgumentException("CodingCompetition with id $id not found") }
         codingCompetitionRepository.deleteById(id)
     }
 }

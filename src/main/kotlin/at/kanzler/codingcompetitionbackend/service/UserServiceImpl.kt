@@ -20,8 +20,10 @@ import org.springframework.boot.web.servlet.context.ServletWebServerApplicationC
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.InetAddress
 import java.util.*
+import javax.servlet.http.HttpServletRequest
 import kotlin.NoSuchElementException
 
 
@@ -31,7 +33,6 @@ class UserServiceImpl(
     @Autowired private val passwordEncoder: PasswordEncoder,
     @Autowired private val verificationTokenRepository: VerificationTokenRepository,
     @Autowired private val passwordResetTokenRepository: PasswordResetTokenRepository,
-    @Autowired private val webServerAppContext: ServletWebServerApplicationContext,
     @Autowired private val publisher: ApplicationEventPublisher,
 ) : UserService {
 
@@ -88,8 +89,12 @@ class UserServiceImpl(
     }
 
     fun publishTokenEvent(token: VerificationToken) =
-        publisher.publishEvent(SendTokenEmailEvent(token.user ?: throw NoSuchElementException("User not found"),
-            "${getApplicationUrl()}/api/v1/auth/verifyRegistration?token=${token.token}"))
+        publisher.publishEvent(
+            SendTokenEmailEvent(
+                token.user ?: throw NoSuchElementException("User not found"),
+                "${getApplicationUrl()}/api/v1/auth/verifyRegistration?token=${token.token}"
+            )
+        )
 
 
     override fun forgotPassword(passwordDto: ForgotPasswordDto) {
@@ -98,8 +103,12 @@ class UserServiceImpl(
 
         val passwordResetToken = PasswordResetToken(user, UUID.randomUUID().toString())
         passwordResetTokenRepository.save(passwordResetToken)
-        publisher.publishEvent(SendTokenEmailEvent(user,
-            "${getApplicationUrl()}/api/v1/auth/savePassword?token=${passwordResetToken.token}"))
+        publisher.publishEvent(
+            SendTokenEmailEvent(
+                user,
+                "${getApplicationUrl()}/api/v1/auth/savePassword?token=${passwordResetToken.token}"
+            )
+        )
     }
 
     override fun savePassword(token: String, resetPassword: ResetPasswordDto) {
@@ -127,7 +136,6 @@ class UserServiceImpl(
         userRepository.save(user);
     }
 
-    fun getApplicationUrl(): String = "http://${InetAddress.getLoopbackAddress().getHostName()}:${
-        webServerAppContext.environment.getProperty("local.server.port") ?: throw Exception("local.server.port not found")
-    }"
+    fun getApplicationUrl(): String =
+        ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 }
