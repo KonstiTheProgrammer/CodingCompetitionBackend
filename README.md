@@ -24,4 +24,5 @@ thymeleaf
 <br>
 
 <h2>MR Model</h2>
+
 ![mr model](https://github.com/KonstiTheProgrammer/CodingCompetitionBackend/blob/master/planning/model.png)
