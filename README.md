@@ -1,5 +1,21 @@
 # CodingCompetitionBackend
 
-This is a Coding Competion Backand build with Gradle, JPA, Kotlin, Spring Web Rest Api
+<h3>This is a coding-competition backend</h3>
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+technologies:
+kotlin,
+spring boot,
+docker,
+postgres,
+gradle,
+spring data jpa,
+mapstruct,
+junit,
+mockMvc,
+thymeleaf
+
+
+
+
+MR Model
+![mr model](https://github.com/KonstiTheProgrammer/CodingCompetitionBackend/blob/master/planning/model.png)
